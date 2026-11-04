@@ -92,6 +92,9 @@ img{max-width:100%}
 }
 .marquee-track{display:flex;width:max-content;animation:marquee 38s linear infinite}
 .marquee b{color:var(--mg);margin:0 16px}
+.marquee a{color:var(--muted);text-decoration:none;border-bottom:1px dotted rgba(179,136,255,.45);transition:.15s}
+.marquee a:hover{color:#fff;border-color:var(--p2)}
+.marquee:hover .marquee-track{animation-play-state:paused}
 .marquee-group{display:flex;flex:none;align-items:center;white-space:nowrap}
 @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 

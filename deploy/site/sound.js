@@ -1,5 +1,5 @@
 (() => {
-  const KEY = 'mood-games-sound-v2';
+  const KEY = 'mood-games-sound-v3';
   const btn = document.getElementById('sound-toggle');
   const label = document.getElementById('sound-label');
   let on = true;
@@ -82,10 +82,15 @@
   }
 
   function toggle() {
-    on = !on;
+    if (on) {
+      coin();
+      on = false;
+    } else {
+      on = true;
+      coin();
+    }
     try { localStorage.setItem(KEY, on ? 'on' : 'off'); } catch {}
     apply();
-    if (on) coin();
   }
 
   if (btn) btn.addEventListener('click', toggle);
