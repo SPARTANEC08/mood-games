@@ -7,7 +7,7 @@
 <meta name="description" content="Mood Games — маленький игровой уголок внутри Mood: браузерные игры, портфолио и немного рекламы.">
 <meta name="theme-color" content="#070512">
 <link rel="icon" href="assets/cabinet-mark.png">
-<link rel="stylesheet" href="style.css?v=1">
+<link rel="stylesheet" href="style.css?v=2">
 </head>
 <body>
 <div class="wrap">
@@ -19,54 +19,57 @@
     <nav class="nav" aria-label="Основная навигация">
       <a href="/">Игры</a>
       <a class="active" href="about.html">О нас</a>
+      <button class="sound-btn" id="sound-toggle" type="button" aria-pressed="false">
+        <span class="dot"></span><span id="sound-label">Sound off</span>
+      </button>
       <a class="mood" href="https://mood-app.ru" target="_blank" rel="noopener">Mood ↗</a>
     </nav>
   </header>
 
-  <main>
-    <section class="about-hero">
-      <div>
-        <div class="kicker">О проекте</div>
-        <h1>Игровой уголок<br><span>внутри Mood.</span></h1>
-        <p>Mood Games — маленький хаб с браузерными играми. Часть Mood по духу, но отдельный сайт: свой домен, статика и никакого доступа к данным Mood.</p>
-        <div class="hero-actions">
-          <a class="btn primary" href="/#games">Выбрать игру</a>
-          <a class="btn ghost" href="https://github.com/SPARTANEC08/mood-games" target="_blank" rel="noopener">GitHub</a>
-        </div>
-      </div>
-      <div class="art" aria-hidden="true">
-        <img src="assets/cabinet-mark.png" alt="">
-      </div>
-    </section>
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>About project <b>◆</b> Made by Mood <b>◆</b> Play in browser <b>◆</b> No install <b>◆</b> </span>
+      <span>About project <b>◆</b> Made by Mood <b>◆</b> Play in browser <b>◆</b> No install <b>◆</b> </span>
+    </div>
+  </div>
 
-    <section class="about-grid">
+  <main>
+    <div class="about-head">
+      <span class="sec-num">02 / about</span>
+      <h1>О проекте<span class="blink">_</span></h1>
+      <div class="rule"></div>
+    </div>
+
+    <p class="about-lead">Mood Games — маленький игровой уголок внутри Mood. Часть Mood по духу, но отдельный сайт: свой домен, статика и никакого доступа к данным Mood.</p>
+
+    <div class="about-grid">
       <article class="about-card">
-        <div class="num">01</div>
-        <h2>Поиграть на паре</h2>
-        <p>Скоротать пару, убить пять минут между заданиями или просто понастальгировать по аркадам. Без установки, регистрации и лишних экранов: открыл — играешь.</p>
+        <div class="num">01 / free time</div>
+        <h2>Скоротать пару</h2>
+        <p>Поиграть на паре, убить пять минут между заданиями или просто понастальгировать по аркадам. Без установки, регистрации и лишних экранов: открыл — играешь.</p>
       </article>
 
       <article class="about-card">
-        <div class="num">02</div>
+        <div class="num">02 / portfolio</div>
         <h2>Портфолио</h2>
         <p>Это ещё и сборка для портфолио: пиксельная графика, SVG, статический хостинг и маленькие игры с нуля. Всё, что здесь есть, сделано руками.</p>
       </article>
 
       <article class="about-card">
-        <div class="num">03</div>
+        <div class="num">03 / small money</div>
         <h2>Небольшая денежка</h2>
         <p>Проект не про большие деньги. Реклама помогает оплачивать сервер и иногда приносит небольшую сумму. Никаких платежей, подписок и платных уровней.</p>
       </article>
 
       <article class="about-card">
-        <div class="num">04</div>
+        <div class="num">04 / mood link</div>
         <h2>Связь с Mood</h2>
         <p>Mood — основное приложение для учёбы. Игры живут на отдельном origin, поэтому у них нет доступа к PWA-токену и localStorage Mood. Только ссылка в «Кабинете».</p>
       </article>
-    </section>
+    </div>
 
-    <section class="about-card" style="margin-top:14px">
-      <div class="num">Принципы</div>
+    <section class="about-card" style="margin-top:16px">
+      <div class="num">05 / rules</div>
       <h2>Как это работает</h2>
       <ul class="about-list">
         <li>Игры открываются в браузере — ничего не скачивается и не занимает место.</li>
@@ -81,7 +84,7 @@
         <h2>Готов? Выбери игру.</h2>
         <p>Сейчас доступен Block Pop. Дальше будет больше — хаб останется тем же.</p>
       </div>
-      <a class="btn primary" href="/#games">Открыть игры</a>
+      <a class="play" href="/#games">Играть</a>
     </section>
   </main>
 
@@ -96,5 +99,6 @@
   </footer>
 
 </div>
+<script src="sound.js?v=2" defer></script>
 </body>
 </html>

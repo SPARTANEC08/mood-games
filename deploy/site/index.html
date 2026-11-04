@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mood Games — все игры</title>
+<title>Mood Games — выбери игру</title>
 <meta name="description" content="Браузерные игры от создателя Mood. Без установки и регистрации: открыл — играешь.">
 <meta name="theme-color" content="#070512">
 <link rel="icon" href="assets/cabinet-mark.png">
-<link rel="stylesheet" href="style.css?v=1">
+<link rel="stylesheet" href="style.css?v=2">
 </head>
 <body>
 <div class="wrap">
@@ -19,38 +19,32 @@
     <nav class="nav" aria-label="Основная навигация">
       <a class="active" href="/">Игры</a>
       <a href="about.html">О нас</a>
+      <button class="sound-btn" id="sound-toggle" type="button" aria-pressed="false">
+        <span class="dot"></span><span id="sound-label">Sound off</span>
+      </button>
       <a class="mood" href="https://mood-app.ru" target="_blank" rel="noopener">Mood ↗</a>
     </nav>
   </header>
 
-  <main>
-    <section class="hero">
-      <div>
-        <div class="kicker">Mood Games · браузерные игры</div>
-        <h1>Все игры<br><span>в одном месте.</span></h1>
-        <p>Без установки и регистрации. Открыл — играешь. Новые игры появляются здесь же, ссылка не меняется.</p>
-        <div class="hero-actions">
-          <a class="btn primary" href="#games">Смотреть игры</a>
-          <a class="btn ghost" href="about.html">О проекте</a>
-        </div>
-      </div>
-      <div class="hero-art" aria-hidden="true">
-        <img src="assets/cabinet-mark.png" alt="">
-      </div>
-    </section>
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Select game <b>◆</b> Block Pop <b>◆</b> No install <b>◆</b> Play in browser <b>◆</b> Made by Mood <b>◆</b> </span>
+      <span>Select game <b>◆</b> Block Pop <b>◆</b> No install <b>◆</b> Play in browser <b>◆</b> Made by Mood <b>◆</b> </span>
+    </div>
+  </div>
 
-    <section class="games-section" id="games">
+  <main>
+    <section id="games">
       <div class="section-head">
-        <h2>Игры</h2>
+        <span class="sec-num">01 / select game</span>
+        <h1>Выбери игру<span class="blink">_</span></h1>
         <div class="rule"></div>
         <span class="count" id="games-count"></span>
       </div>
+
       <div class="games" id="games-grid" aria-live="polite"></div>
       <noscript>
-        <div class="noscript">
-          Для списка игр нужен JavaScript. Пока можно открыть
-          <a href="blockpop/" style="color:var(--p2)">Block Pop</a>.
-        </div>
+        <p class="count">Для списка игр нужен JavaScript. Пока можно открыть <a href="blockpop/" style="color:var(--p2)">Block Pop</a>.</p>
       </noscript>
     </section>
   </main>
@@ -66,6 +60,7 @@
   </footer>
 
 </div>
-<script src="app.js?v=1" defer></script>
+<script src="sound.js?v=2" defer></script>
+<script src="app.js?v=2" defer></script>
 </body>
 </html>
