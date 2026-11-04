@@ -29,9 +29,6 @@
 
   const card = (game) => {
     const live = game.status === 'live' && Boolean(game.url);
-    const tags = (game.tags || [])
-      .map((tag, i) => `<span class="tag${i === 0 ? ' hi' : ''}">${esc(tag)}</span>`)
-      .join('');
 
     const screen = live
       ? `<a class="cab-screen" href="${esc(game.url)}"${linkAttrs(game.url)} aria-label="${esc(game.title)} — играть">${cover(game)}</a>`
@@ -39,20 +36,12 @@
 
     return `
       <article class="cabinet-card${live ? '' : ' soon'}">
-        <div class="cab-top">
-          <span class="cab-title">${esc(game.title)}</span>
-          <span class="cab-badge${live ? '' : ' soon'}"><i></i>${live ? 'live' : 'soon'}</span>
-        </div>
         ${screen}
-        <div class="cab-body">
-          <p class="cab-desc">${esc(game.description)}</p>
-          <div class="tags">${tags}</div>
-          <div class="cab-foot">
-            <span class="cab-note">${live ? 'free play' : 'soon'}</span>
-            ${live
-              ? `<a class="play" href="${esc(game.url)}"${linkAttrs(game.url)}>Play</a>`
-              : `<span class="play disabled">Soon</span>`}
-          </div>
+        <div class="cab-bottom">
+          <span class="cab-name">${esc(game.title)}</span>
+          ${live
+            ? `<a class="play" href="${esc(game.url)}"${linkAttrs(game.url)}>Play</a>`
+            : `<span class="play disabled">Soon</span>`}
         </div>
       </article>`;
   };
@@ -73,16 +62,10 @@
     .catch(() => {
       grid.innerHTML = `
         <article class="cabinet-card">
-          <div class="cab-top">
-            <span class="cab-title">Ошибка</span>
-            <span class="cab-badge soon"><i></i>offline</span>
-          </div>
-          <div class="cab-body">
-            <p class="cab-desc">Не удалось загрузить список игр. Обнови страницу.</p>
-            <div class="cab-foot">
-              <span class="cab-note"></span>
-              <a class="play" href="/">Обновить</a>
-            </div>
+          <div class="cab-screen"><div class="cover-fallback"><img src="assets/cabinet-mark.png" alt=""></div></div>
+          <div class="cab-bottom">
+            <span class="cab-name">Ошибка</span>
+            <a class="play" href="/">Обновить</a>
           </div>
         </article>`;
       if (count) count.textContent = '';
