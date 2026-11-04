@@ -7,6 +7,7 @@ class SoundEngine {
   private ctx: AudioContext | null = null;
   private muted: boolean = false;
   private adMuted: boolean = false;
+  private unlocked: boolean = false;
 
   constructor() {
     // Read saved preference
@@ -14,6 +15,37 @@ class SoundEngine {
     if (saved !== null) {
       this.muted = saved === 'true';
     }
+    this.installUnlock();
+  }
+
+  /**
+   * iOS Safari / standalone PWA won't start Web Audio until it is created
+   * and resumed inside a real user gesture. Do it once, on the first tap.
+   */
+  private installUnlock() {
+    if (typeof window === 'undefined') return;
+
+    const unlock = () => {
+      const ctx = this.initCtx();
+      if (!ctx) return;
+
+      if (!this.unlocked) {
+        try {
+          const buffer = ctx.createBuffer(1, 1, 22050);
+          const source = ctx.createBufferSource();
+          source.buffer = buffer;
+          source.connect(ctx.destination);
+          source.start(0);
+          this.unlocked = true;
+        } catch {
+          // AudioContext safety
+        }
+      }
+    };
+
+    ['pointerdown', 'touchstart', 'click'].forEach((eventName) => {
+      window.addEventListener(eventName, unlock, { capture: true, passive: true, once: true });
+    });
   }
 
   public setAdMute(mute: boolean) {
@@ -24,7 +56,7 @@ class SoundEngine {
     return this.muted || this.adMuted;
   }
 
-  private initCtx() {
+  private initCtx(): AudioContext | null {
     if (!this.ctx) {
       const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
       if (AudioCtx) {
@@ -32,8 +64,9 @@ class SoundEngine {
       }
     }
     if (this.ctx && this.ctx.state === 'suspended') {
-      this.ctx.resume();
+      this.ctx.resume().catch(() => {});
     }
+    return this.ctx;
   }
 
   public toggleMute(): boolean {

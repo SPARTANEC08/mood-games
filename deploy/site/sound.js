@@ -4,11 +4,10 @@
   const label = document.getElementById('sound-label');
   let on = true;
   let ctx = null;
-  let pointerSound = false;
+  let unlocked = false;
 
   try {
-    const stored = localStorage.getItem(KEY);
-    if (stored === 'off') on = false;
+    if (localStorage.getItem(KEY) === 'off') on = false;
   } catch {}
 
   function apply() {
@@ -25,26 +24,52 @@
       if (!AC) return null;
       ctx = new AC();
     }
-    if (ctx.state === 'suspended') ctx.resume();
     return ctx;
   }
+
+  // iOS/Safari: контекст надо создать и разбудить внутри жеста.
+  function unlock() {
+    const ac = audio();
+    if (!ac) return;
+    if (ac.state === 'suspended') ac.resume().catch(() => {});
+    if (!unlocked) {
+      try {
+        const buffer = ac.createBuffer(1, 1, 22050);
+        const source = ac.createBufferSource();
+        source.buffer = buffer;
+        source.connect(ac.destination);
+        source.start(0);
+        unlocked = true;
+      } catch {}
+    }
+  }
+
+  ['pointerdown', 'touchstart', 'click'].forEach((eventName) => {
+    document.addEventListener(eventName, unlock, { capture: true, passive: true, once: true });
+  });
 
   function tone(freq, delay, duration, volume = 0.035) {
     if (!on) return;
     const ac = audio();
     if (!ac) return;
-    const t = ac.currentTime + delay;
-    const osc = ac.createOscillator();
-    const gain = ac.createGain();
-    osc.type = 'square';
-    osc.frequency.setValueAtTime(freq, t);
-    gain.gain.setValueAtTime(0.0001, t);
-    gain.gain.linearRampToValueAtTime(volume, t + 0.008);
-    gain.gain.exponentialRampToValueAtTime(0.0001, t + duration);
-    osc.connect(gain);
-    gain.connect(ac.destination);
-    osc.start(t);
-    osc.stop(t + duration + 0.02);
+
+    const play = () => {
+      const t = ac.currentTime + delay;
+      const osc = ac.createOscillator();
+      const gain = ac.createGain();
+      osc.type = 'square';
+      osc.frequency.setValueAtTime(freq, t);
+      gain.gain.setValueAtTime(0.0001, t);
+      gain.gain.linearRampToValueAtTime(volume, t + 0.008);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t + duration);
+      osc.connect(gain);
+      gain.connect(ac.destination);
+      osc.start(t);
+      osc.stop(t + duration + 0.02);
+    };
+
+    if (ac.state === 'suspended') ac.resume().then(play).catch(() => {});
+    else play();
   }
 
   function click() {
@@ -65,24 +90,25 @@
 
   if (btn) btn.addEventListener('click', toggle);
 
-  // Монетка срабатывает на pointerdown — до перехода по ссылке.
-  document.addEventListener('pointerdown', (event) => {
-    const el = event.target.closest('.play, .cab-screen');
-    if (!el || el.classList.contains('disabled')) return;
-    pointerSound = true;
-    coin();
-    setTimeout(() => { pointerSound = false; }, 350);
-  }, { passive: true });
-
   document.addEventListener('click', (event) => {
     const el = event.target.closest('a,button');
     if (!el || el.id === 'sound-toggle') return;
-    if (el.classList.contains('play') || el.classList.contains('cab-screen')) {
-      if (pointerSound) return;
+
+    const gameLink = el.closest('a.play, a.cab-screen');
+    const modifier = event.metaKey || event.ctrlKey || event.shiftKey || event.altKey;
+    if (gameLink && !modifier && gameLink.origin === location.origin) {
+      event.preventDefault();
+      if (!on) {
+        location.href = gameLink.href;
+        return;
+      }
       coin();
+      setTimeout(() => { location.href = gameLink.href; }, 140);
       return;
     }
-    click();
+
+    if (el.classList.contains('play') || el.classList.contains('cab-screen')) coin();
+    else click();
   });
 
   apply();
