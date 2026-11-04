@@ -176,6 +176,8 @@ img{max-width:100%}
 .faq summary::after{content:"+";font:700 18px/1 var(--font-t);color:var(--mg);flex:none}
 .faq details[open] summary::after{content:"−"}
 .faq p{padding:0 16px 14px;color:var(--muted);font-size:13px;line-height:1.6;max-width:760px}
+.faq-ask{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:14px 16px;border-top:1px solid var(--line);background:rgba(124,77,255,.05)}
+.faq-ask span{font:600 11px/1.4 var(--font-t);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 
 /* footer */
 .footer{
