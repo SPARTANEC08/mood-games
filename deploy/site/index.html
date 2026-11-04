@@ -7,20 +7,21 @@
 <meta name="description" content="Браузерные игры от создателя Mood. Без установки и регистрации: открыл — играешь.">
 <meta name="theme-color" content="#070512">
 <link rel="icon" href="assets/cabinet-mark.png">
-<link rel="stylesheet" href="style.css?v=3">
+<link rel="stylesheet" href="style.css?v=4">
 </head>
 <body>
 <div class="wrap">
 
   <header class="site-header">
     <a class="logo" href="/" aria-label="Mood Games — на главную">
-      <img src="assets/arcade-logo.png" alt="Mood Games">
+      <img src="assets/cabinet-mark.png" alt="">
+      <span class="logo-type"><b>mood</b><i>games</i></span>
     </a>
     <nav class="nav" aria-label="Основная навигация">
       <a class="active" href="/">Игры</a>
       <a href="about.html">О нас</a>
-      <button class="sound-btn" id="sound-toggle" type="button" aria-pressed="false">
-        <span class="dot"></span><span id="sound-label">Sound off</span>
+      <button class="sound-btn" id="sound-toggle" type="button" aria-pressed="true">
+        <span class="dot"></span><span id="sound-label">Sound on</span>
       </button>
       <a class="mood" href="https://mood-app.ru" target="_blank" rel="noopener">Mood ↗</a>
     </nav>
@@ -28,8 +29,8 @@
 
   <div class="marquee" aria-hidden="true">
     <div class="marquee-track">
-      <span>Select game <b>◆</b> Block Pop <b>◆</b> No install <b>◆</b> Play in browser <b>◆</b> Made by Mood <b>◆</b> </span>
-      <span>Select game <b>◆</b> Block Pop <b>◆</b> No install <b>◆</b> Play in browser <b>◆</b> Made by Mood <b>◆</b> </span>
+      <span>Select game <b>◆</b> Play in browser <b>◆</b> No install <b>◆</b> Made by Mood <b>◆</b> </span>
+      <span>Select game <b>◆</b> Play in browser <b>◆</b> No install <b>◆</b> Made by Mood <b>◆</b> </span>
     </div>
   </div>
 
@@ -44,7 +45,7 @@
 
       <div class="games" id="games-grid" aria-live="polite"></div>
       <noscript>
-        <p class="count">Для списка игр нужен JavaScript. Пока можно открыть <a href="blockpop/" style="color:var(--p2)">Block Pop</a>.</p>
+        <p class="count">Для списка игр нужен JavaScript. Включи его и обнови страницу.</p>
       </noscript>
     </section>
   </main>
@@ -60,7 +61,7 @@
   </footer>
 
 </div>
-<script src="sound.js?v=2" defer></script>
-<script src="app.js?v=2" defer></script>
+<script src="sound.js?v=3" defer></script>
+<script src="app.js?v=3" defer></script>
 </body>
 </html>

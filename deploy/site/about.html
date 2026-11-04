@@ -4,23 +4,24 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>О проекте — Mood Games</title>
-<meta name="description" content="Mood Games — небольшой хаб браузерных игр рядом с Mood. Бесплатно, без регистрации и без доступа к данным Mood.">
+<meta name="description" content="Mood Games — небольшой хаб браузерных игр рядом с Mood. Без установки, регистрации и доступа к данным Mood.">
 <meta name="theme-color" content="#070512">
 <link rel="icon" href="assets/cabinet-mark.png">
-<link rel="stylesheet" href="style.css?v=3">
+<link rel="stylesheet" href="style.css?v=4">
 </head>
 <body>
 <div class="wrap">
 
   <header class="site-header">
     <a class="logo" href="/" aria-label="Mood Games — на главную">
-      <img src="assets/arcade-logo.png" alt="Mood Games">
+      <img src="assets/cabinet-mark.png" alt="">
+      <span class="logo-type"><b>mood</b><i>games</i></span>
     </a>
     <nav class="nav" aria-label="Основная навигация">
       <a href="/">Игры</a>
       <a class="active" href="about.html">О нас</a>
-      <button class="sound-btn" id="sound-toggle" type="button" aria-pressed="false">
-        <span class="dot"></span><span id="sound-label">Sound off</span>
+      <button class="sound-btn" id="sound-toggle" type="button" aria-pressed="true">
+        <span class="dot"></span><span id="sound-label">Sound on</span>
       </button>
       <a class="mood" href="https://mood-app.ru" target="_blank" rel="noopener">Mood ↗</a>
     </nav>
@@ -28,8 +29,8 @@
 
   <div class="marquee" aria-hidden="true">
     <div class="marquee-track">
-      <span>About project <b>◆</b> Made by Mood <b>◆</b> Play in browser <b>◆</b> No install <b>◆</b> </span>
-      <span>About project <b>◆</b> Made by Mood <b>◆</b> Play in browser <b>◆</b> No install <b>◆</b> </span>
+      <span>About project <b>◆</b> Play in browser <b>◆</b> No install <b>◆</b> Made by Mood <b>◆</b> </span>
+      <span>About project <b>◆</b> Play in browser <b>◆</b> No install <b>◆</b> Made by Mood <b>◆</b> </span>
     </div>
   </div>
 
@@ -40,88 +41,54 @@
       <div class="rule"></div>
     </div>
 
-    <p class="about-lead">Mood Games — небольшая коллекция браузерных игр рядом с Mood. Не заменяет приложение и не вмешивается в учёбу: отдельный уголок, где можно выбрать игру и сразу начать.</p>
-
-    <div class="facts">
-      <div class="fact"><b>0</b><span>установок</span></div>
-      <div class="fact"><b>0</b><span>регистраций</span></div>
-      <div class="fact"><b>0</b><span>подписок</span></div>
-    </div>
+    <p class="about-lead">Mood Games — маленький хаб с браузерными играми. Он живёт отдельно от Mood: сюда приходят поиграть, а не учиться. Без установки, регистрации и лишних экранов.</p>
 
     <div class="about-grid">
       <article class="about-card">
         <div class="num">01 / what</div>
         <h2>Что это</h2>
-        <p>Хаб с играми, сделанными с нуля. Сейчас здесь Block Pop, дальше будут новые. Всё открывается в браузере на телефоне и компьютере — без установки и лишних экранов.</p>
+        <p>Несколько браузерных игр в одном месте. Открываются на телефоне и компьютере, работают без аккаунта и установки. Выбрал игру — сразу играешь.</p>
       </article>
 
       <article class="about-card">
-        <div class="num">02 / how</div>
-        <h2>Как играть</h2>
-        <p>Выбери игру на главной и нажми «Играть». Не нужно ничего скачивать, регистрироваться и заводить новый пароль. Открыл — играешь.</p>
+        <div class="num">02 / why</div>
+        <h2>Зачем</h2>
+        <p>Скоротать пару, отвлечься между заданиями, понастальгировать по аркадам. Для автора это ещё и практика в пиксельной графике, геймдеве и портфолио.</p>
       </article>
 
       <article class="about-card">
-        <div class="num">03 / why</div>
-        <h2>Зачем это</h2>
-        <p>Скоротать пару, сделать паузу между заданиями, понастальгировать по аркадам. Для автора это ещё и практика: пиксельная графика, геймдев и сборка для портфолио.</p>
-      </article>
-
-      <article class="about-card">
-        <div class="num">04 / privacy</div>
+        <div class="num">03 / privacy</div>
         <h2>Приватность</h2>
-        <p>Игры живут на отдельном сайте. Они не видят аккаунт Mood, расписание, оценки и файлы. В Mood есть только ссылка на этот хаб — без доступа к личным данным.</p>
+        <p>Игры живут на отдельном сайте. Они не видят аккаунт Mood, расписание, оценки и файлы. В Mood есть только ссылка на этот хаб.</p>
       </article>
 
       <article class="about-card">
-        <div class="num">05 / money</div>
-        <h2>Бесплатно</h2>
-        <p>Платных игр, подписок и донатов нет. Реклама, если появляется, нужна только чтобы частично покрыть домен и сервер. Доход не гарантирован — это не цель проекта.</p>
-      </article>
-
-      <article class="about-card">
-        <div class="num">06 / next</div>
-        <h2>Что дальше</h2>
-        <p>Новые игры появятся на главной, ссылка в Mood не изменится. Идеи, баги и предложения можно кидать в поддержку или в GitHub — что-то обязательно станет игрой.</p>
+        <div class="num">04 / ads</div>
+        <h2>Реклама</h2>
+        <p>В основной проект Mood реклама не внедряется. На сайте игр возможны небольшие баннеры — чтобы проект мог хотя бы частично зарабатывать. Без подписок и платных игр.</p>
       </article>
     </div>
 
-    <h2 class="about-sub">Частые вопросы</h2>
+    <h2 class="about-sub">Коротко</h2>
     <div class="faq">
       <details>
-        <summary>Нужна ли регистрация?</summary>
-        <p>Нет. Игры открываются сразу, без аккаунта и пароля. Если в будущем появится что-то с сохранением прогресса — это будет отдельно и по желанию.</p>
+        <summary>Нужна регистрация?</summary>
+        <p>Нет. Игры открываются сразу, без аккаунта и пароля.</p>
       </details>
       <details>
-        <summary>Это правда бесплатно?</summary>
-        <p>Да. Нет платных уровней, подписок и донатов. Реклама может быть, но она не закрывает игры, не режет контент и не влияет на процесс.</p>
+        <summary>Игры видят мои данные?</summary>
+        <p>Нет. Это отдельный сайт: он не получает доступ к аккаунту Mood, расписанию, оценкам и файлам.</p>
       </details>
       <details>
-        <summary>Игры видят мои оценки и расписание?</summary>
-        <p>Нет. Это отдельный сайт. У него нет доступа к аккаунту Mood, расписанию, оценкам, файлам и другим личным данным.</p>
-      </details>
-      <details>
-        <summary>Почему вообще есть реклама?</summary>
-        <p>Чтобы частично покрыть домен и сервер. Проект не продаёт данные и не обещает доход: если реклама когда-нибудь окупит хостинг — уже хорошо. Основная цель — игры и практика, а не заработок.</p>
-      </details>
-      <details>
-        <summary>Будут ли новые игры?</summary>
-        <p>Да, по мере сил. Они появляются на этой же странице, ссылка в Mood не меняется. Следующая игра уже в работе.</p>
-      </details>
-      <details>
-        <summary>Можно предложить игру или сообщить о баге?</summary>
-        <p>Да. Напиши в поддержку <a href="https://t.me/mood_mpei_sup" target="_blank" rel="noopener" style="color:var(--p2)">@mood_mpei_sup</a> или создай issue в GitHub. Особенно полезны баги на телефоне.</p>
-      </details>
-      <details>
-        <summary>Можно играть с телефона?</summary>
-        <p>Да. Игры работают в браузере на телефоне и компьютере. Хаб можно добавить на домашний экран, чтобы открывать в один тап.</p>
+        <summary>Будут новые игры?</summary>
+        <p>Да, по мере сил. Они появляются в общем списке на главной, ссылка в Mood не меняется.</p>
       </details>
     </div>
 
     <section class="about-cta">
       <div>
-        <h2>Готов? Выбери игру.</h2>
-        <p>Сейчас доступен Block Pop. Дальше будет больше — хаб останется тем же.</p>
+        <h2>Выбери игру.</h2>
+        <p>Новые игры появятся в этом же списке — хаб останется тем же.</p>
       </div>
       <a class="play" href="/#games">Открыть игры</a>
     </section>
@@ -138,6 +105,6 @@
   </footer>
 
 </div>
-<script src="sound.js?v=2" defer></script>
+<script src="sound.js?v=3" defer></script>
 </body>
 </html>

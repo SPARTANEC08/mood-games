@@ -18,9 +18,7 @@
   };
 
   const isExternal = (url) => /^https?:\/\//i.test(url || '');
-  const linkAttrs = (url) => isExternal(url)
-    ? ' target="_blank" rel="noopener"'
-    : '';
+  const linkAttrs = (url) => isExternal(url) ? ' target="_blank" rel="noopener"' : '';
 
   const cover = (game) => {
     if (game.cover) {
@@ -35,26 +33,25 @@
       .map((tag, i) => `<span class="tag${i === 0 ? ' hi' : ''}">${esc(tag)}</span>`)
       .join('');
 
-    const media = live
-      ? `<a class="cover" href="${esc(game.url)}"${linkAttrs(game.url)} aria-label="${esc(game.title)} — играть">${cover(game)}</a>`
-      : `<div class="cover" aria-hidden="true">${cover(game)}</div>`;
+    const screen = live
+      ? `<a class="cab-screen" href="${esc(game.url)}"${linkAttrs(game.url)} aria-label="${esc(game.title)} — играть">${cover(game)}</a>`
+      : `<div class="cab-screen">${cover(game)}</div>`;
 
     return `
-      <article class="game-card${live ? '' : ' soon'}">
-        ${media}
-        <span class="badge${live ? '' : ' soon'}"><i></i>${live ? 'live' : 'soon'}</span>
-        <div class="game-body">
-          <div class="title-row">
-            <h3>${esc(game.title)}</h3>
-            ${live ? `<span class="arrow" aria-hidden="true">↗</span>` : ''}
-          </div>
-          <p>${esc(game.description)}</p>
+      <article class="cabinet-card${live ? '' : ' soon'}">
+        <div class="cab-top">
+          <span class="cab-title">${esc(game.title)}</span>
+          <span class="cab-badge${live ? '' : ' soon'}"><i></i>${live ? 'live' : 'soon'}</span>
+        </div>
+        ${screen}
+        <div class="cab-body">
+          <p class="cab-desc">${esc(game.description)}</p>
           <div class="tags">${tags}</div>
-          <div class="game-foot">
-            <span class="score">${live ? 'бесплатно' : 'скоро'}</span>
+          <div class="cab-foot">
+            <span class="cab-note">${live ? 'free play' : 'soon'}</span>
             ${live
-              ? `<a class="play" href="${esc(game.url)}"${linkAttrs(game.url)}>Играть</a>`
-              : `<span class="play disabled">Скоро</span>`}
+              ? `<a class="play" href="${esc(game.url)}"${linkAttrs(game.url)}>Play</a>`
+              : `<span class="play disabled">Soon</span>`}
           </div>
         </div>
       </article>`;
@@ -75,13 +72,16 @@
     })
     .catch(() => {
       grid.innerHTML = `
-        <article class="game-card">
-          <div class="game-body">
-            <h3>Не удалось загрузить игры</h3>
-            <p>Обнови страницу или открой Block Pop напрямую.</p>
-            <div class="game-foot">
-              <span class="score"></span>
-              <a class="play" href="blockpop/">Играть</a>
+        <article class="cabinet-card">
+          <div class="cab-top">
+            <span class="cab-title">Ошибка</span>
+            <span class="cab-badge soon"><i></i>offline</span>
+          </div>
+          <div class="cab-body">
+            <p class="cab-desc">Не удалось загрузить список игр. Обнови страницу.</p>
+            <div class="cab-foot">
+              <span class="cab-note"></span>
+              <a class="play" href="/">Обновить</a>
             </div>
           </div>
         </article>`;

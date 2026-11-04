@@ -1,11 +1,15 @@
 (() => {
-  const KEY = 'mood-games-sound';
+  const KEY = 'mood-games-sound-v2';
   const btn = document.getElementById('sound-toggle');
   const label = document.getElementById('sound-label');
-  let on = false;
+  let on = true;
   let ctx = null;
+  let pointerSound = false;
 
-  try { on = localStorage.getItem(KEY) === 'on'; } catch {}
+  try {
+    const stored = localStorage.getItem(KEY);
+    if (stored === 'off') on = false;
+  } catch {}
 
   function apply() {
     if (btn) {
@@ -25,7 +29,8 @@
     return ctx;
   }
 
-  function tone(freq, delay, duration, volume = 0.03) {
+  function tone(freq, delay, duration, volume = 0.035) {
+    if (!on) return;
     const ac = audio();
     if (!ac) return;
     const t = ac.currentTime + delay;
@@ -43,14 +48,12 @@
   }
 
   function click() {
-    if (!on) return;
-    tone(320, 0, 0.055, 0.025);
+    tone(320, 0, 0.055, 0.028);
   }
 
   function coin() {
-    if (!on) return;
-    tone(880, 0, 0.07, 0.04);
-    tone(1320, 0.07, 0.16, 0.04);
+    tone(880, 0, 0.07, 0.045);
+    tone(1320, 0.07, 0.16, 0.045);
   }
 
   function toggle() {
@@ -62,12 +65,24 @@
 
   if (btn) btn.addEventListener('click', toggle);
 
+  // Монетка срабатывает на pointerdown — до перехода по ссылке.
+  document.addEventListener('pointerdown', (event) => {
+    const el = event.target.closest('.play, .cab-screen');
+    if (!el || el.classList.contains('disabled')) return;
+    pointerSound = true;
+    coin();
+    setTimeout(() => { pointerSound = false; }, 350);
+  }, { passive: true });
+
   document.addEventListener('click', (event) => {
     const el = event.target.closest('a,button');
     if (!el || el.id === 'sound-toggle') return;
-    const card = el.closest('.game-card');
-    if (el.classList.contains('play') || (card && el.classList.contains('cover'))) coin();
-    else click();
+    if (el.classList.contains('play') || el.classList.contains('cab-screen')) {
+      if (pointerSound) return;
+      coin();
+      return;
+    }
+    click();
   });
 
   apply();
