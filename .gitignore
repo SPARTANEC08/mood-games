@@ -1,0 +1,14 @@
+# Зависимости и сборка
+node_modules/
+dist/
+
+# Секреты: .env и общий с Mood info.md (доступы, пароли)
+.env
+.env.*
+!.env.example
+info.md
+
+# IDE и служебное
+.idea/
+.DS_Store
+*.log

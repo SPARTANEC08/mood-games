@@ -1,0 +1,7 @@
+{
+  "name": "Block Pop",
+  "description": "Точная копия игры Block Pop: поле 8х8, полимино фигуры, сочные взрывы линий, комбо-система и звуковые эффекты.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
