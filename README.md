@@ -25,7 +25,8 @@ git push origin main
 ## Схема
 
 ```text
-https://mood-app.online/            — хаб: выбор игр
+https://mood-app.online/            — главная: все игры
+https://mood-app.online/about.html  — о проекте
 https://mood-app.online/blockpop/   — Block Pop
 https://mood-app.online/<slug>/     — следующая игра
 ```
@@ -48,8 +49,14 @@ pro/mood-games/
 │   └── package.json
 └── deploy/
     ├── README.md             # деплой, nginx, сертификат, ресурсы
-    ├── games-index.html      # страница-хаб
-    └── nginx-mood-app-online.conf
+    ├── nginx-mood-app-online.conf
+    └── site/                 # статика хаба
+        ├── index.html        # главная: все игры
+        ├── about.html        # о проекте
+        ├── style.css
+        ├── app.js            # читает games.json
+        ├── games.json        # список игр
+        └── assets/           # лого, обложки, шрифты
 ```
 
 ## Правила
@@ -62,8 +69,29 @@ pro/mood-games/
 5. **Не встраиваем игры в iframe Mood.** Переход — обычной ссылкой на
    `mood-app.online`.
 6. **Тяжёлые игры (10+ МБ)** — в CDN/объектное хранилище, а не на этот VPS.
-7. **Новая игра** = новая папка `/<slug>/` + карточка на хабе. Ссылка в PWA не
-   меняется.
+7. **Новая игра** = новая папка `/<slug>/` + запись в `deploy/site/games.json`.
+   Главную и ссылку в PWA менять не нужно.
+
+## Добавить игру
+
+1. Выложить сборку в `/var/www/mood-games/<slug>/`.
+2. Добавить объект в `deploy/site/games.json`:
+
+```json
+{
+  "slug": "my-game",
+  "title": "My Game",
+  "url": "my-game/",
+  "description": "Короткое описание.",
+  "tags": ["arcade", "2 min"],
+  "cover": "assets/my-game-cover.png",
+  "status": "live",
+  "order": 3
+}
+```
+
+`status`: `live` или `soon`; `cover` можно не указывать. После этого выложить
+`deploy/site` — карточка появится сама.
 
 ## Быстрый деплой игры
 

@@ -1,76 +1,135 @@
-# Деплой игр Mood на шведский сервер
+# Деплой Mood Games на шведский сервер
 
-Игры живут отдельно от Mood: свой статический каталог, свой домен и свой
+Игры и хаб живут отдельно от Mood: свой статический каталог, свой домен и свой
 nginx-server. RU-сервер не используется.
 
 ## Репозиторий
 
 Исходники и конфиги — в `https://github.com/SPARTANEC08/mood-games.git`
 (локально `/Users/spartanec/pro/mood-games`, ветка `main`, коммит + push после
-каждого изменения). Деплой выкладывает **только** сборку игры (`<slug>/dist`) и
-`games-index.html`; корень репозитория на сервер не копируется. `info.md` —
-общий с Mood файл доступов, локальный симлинк `../mood/info.md`; в git и на
-сервер не попадает.
+каждого изменения).
+
+`info.md` — общий с Mood файл доступов, локальный симлинк `../mood/info.md`;
+в git и на сервер не попадает. `ads.txt` лежит в корне сайта и в git не идёт.
+
+## Что где
+
+```text
+deploy/
+├── site/                         # то, что лежит в /var/www/mood-games
+│   ├── index.html                # главная: все игры
+│   ├── about.html                # «О нас»
+│   ├── style.css
+│   ├── app.js                    # рендер карточек из games.json
+│   ├── games.json                # список игр
+│   └── assets/                   # лого, обложки, шрифты
+├── nginx-mood-app-online.conf
+└── README.md
+```
+
+На сервере:
+
+```text
+/var/www/mood-games/index.html
+/var/www/mood-games/about.html
+/var/www/mood-games/style.css
+/var/www/mood-games/app.js
+/var/www/mood-games/games.json
+/var/www/mood-games/assets/
+/var/www/mood-games/<slug>/       # сборка игры
+/var/www/mood-games/ads.txt       # реклама, вручную
+```
 
 ## Домен
 
 ```text
-https://mood-app.online/            — хаб: выбор игр
+https://mood-app.online/            — главная: все игры
+https://mood-app.online/about.html  — о проекте
 https://mood-app.online/blockpop/   — Block Pop
 https://mood-app.online/<slug>/     — следующая игра
 ```
 
-A-записи домена:
+A-записи: `@` и `www` → `109.120.129.61`. Сертификат Let's Encrypt продлевается
+certbot timer.
 
-```text
-A     @    109.120.129.61
-A     www  109.120.129.61
+Старый адрес `109-120-129-61.sslip.io/games/block-blast/` отключён.
+
+## Как добавить игру
+
+1. Собрать игру и выложить её в `/var/www/mood-games/<slug>/` (команды ниже).
+2. Добавить объект в `deploy/site/games.json`:
+
+```json
+{
+  "slug": "my-game",
+  "title": "My Game",
+  "url": "my-game/",
+  "description": "Короткое описание в одну-две строки.",
+  "tags": ["arcade", "2 min"],
+  "cover": "assets/my-game-cover.png",
+  "status": "live",
+  "order": 3
+}
 ```
 
-Сертификат Let's Encrypt уже выпущен на `mood-app.online` и
-`www.mood-app.online`, продление — через certbot timer.
+- `status`: `"live"` или `"soon"`. У `"soon"` можно не указывать `url`.
+- `cover` необязателен. Без него карточка покажет автомат-заглушку.
+- Обложка: скриншот 1280×760 в `deploy/site/assets/<slug>-cover.png`.
+- `order` — порядок карточек. Новые игры можно просто добавлять в конец.
 
-## Старый адрес
+3. Выложить `deploy/site` (команда ниже). Код главной менять не нужно.
 
-Старый адрес на sslip отключён:
-
-```text
-https://109-120-129-61.sslip.io/games/block-blast/   # больше не игра
-```
-
-## Сборка и выкладка игры
+## Деплой хаба
 
 ```bash
-cd /Users/spartanec/pro/mood-games/blockpop
+cd /Users/spartanec/pro/mood-games
+
+tar -C deploy/site -cf /tmp/mood-games-site.tar .
+scp /tmp/mood-games-site.tar se:/tmp/mood-games-site.tar
+
+# пароль sudo — в локальном info.md
+ssh se
+sudo -i
+cp -a /var/www/mood-games /root/mood-games.bak-$(date +%s)
+tar -C /var/www/mood-games -xf /tmp/mood-games-site.tar
+find /var/www/mood-games -name "._*" -delete
+chown -R root:root /var/www/mood-games
+chmod -R a+rX /var/www/mood-games
+rm -f /tmp/mood-games-site.tar
+```
+
+`tar` распаковывается **поверх**: `blockpop/`, `ads.txt` и другие игры не
+удаляются. Старые файлы хаба перезаписываются.
+
+## Деплой игры
+
+```bash
+cd /Users/spartanec/pro/mood-games/<slug>
 npm run lint
 npm run build
 
-tar -C dist -cf /tmp/blockpop.tar .
-scp /tmp/blockpop.tar se:/tmp/blockpop.tar
+tar -C dist -cf /tmp/<slug>.tar .
+scp /tmp/<slug>.tar se:/tmp/<slug>.tar
 
-# пароль sudo — в локальном info.md, в git не хранится
 ssh se
 sudo -i
-# на сервере:
-rm -rf /var/www/mood-games/blockpop
-mkdir -p /var/www/mood-games/blockpop
-tar -C /var/www/mood-games/blockpop -xf /tmp/blockpop.tar
-find /var/www/mood-games/blockpop -name "._*" -delete
-chown -R root:root /var/www/mood-games/blockpop
-chmod -R a+rX /var/www/mood-games/blockpop
-rm -f /tmp/blockpop.tar
+rm -rf /var/www/mood-games/<slug>
+mkdir -p /var/www/mood-games/<slug>
+tar -C /var/www/mood-games/<slug> -xf /tmp/<slug>.tar
+find /var/www/mood-games/<slug> -name "._*" -delete
+chown -R root:root /var/www/mood-games/<slug>
+chmod -R a+rX /var/www/mood-games/<slug>
+rm -f /tmp/<slug>.tar
 ```
 
 ## Nginx
 
-Конфиг домена: `deploy/nginx-mood-app-online.conf`. На сервере он лежит как
-`/etc/nginx/sites-available/mood-games` и подключён симлинком в
-`/etc/nginx/sites-enabled/`.
+Конфиг домена: `deploy/nginx-mood-app-online.conf`. На сервере:
+`/etc/nginx/sites-available/mood-games`, симлинк в `sites-enabled/`.
 
 ```bash
 scp deploy/nginx-mood-app-online.conf se:/tmp/nginx-mood-app-online.conf
 
-# пароль sudo — в локальном info.md, в git не хранится
 ssh se
 sudo -i
 cp -a /etc/nginx/sites-available/mood-games /root/mood-games.bak-$(date +%s)
@@ -80,16 +139,15 @@ rm -f /tmp/nginx-mood-app-online.conf
 nginx -t && systemctl reload nginx
 ```
 
-## Хаб игр
+## Проверка
 
-Страница выбора игр — `deploy/games-index.html`. На сервере:
-
-```text
-/var/www/mood-games/index.html
+```bash
+curl -sI https://mood-app.online/ | grep -i 'content-type'
+curl -sI https://mood-app.online/about.html | grep -i 'content-type'
+curl -s -o /dev/null -w '%{http_code}\n' https://mood-app.online/games.json
+curl -s -o /dev/null -w '%{http_code}\n' https://mood-app.online/assets/style.css
+curl -s -o /dev/null -w '%{http_code}\n' https://mood-app.online/blockpop/
 ```
-
-Новая игра = новая папка `/var/www/mood-games/<slug>/` + новая карточка в хабе.
-Ссылка в PWA не меняется.
 
 ## Ссылка из PWA
 
@@ -98,23 +156,9 @@ nginx -t && systemctl reload nginx
 окне). Кнопка «Вернуться в Mood» внутри игры возвращает на
 `https://mood-app.ru/`.
 
-## Ресурсы
+## Ресурсы и правила
 
-На сервере добавлены:
-
-- swap-файл `/swapfile` на 1 ГБ;
-- `vm.swappiness=10` и `vm.vfs_cache_pressure=50`;
-- `worker_connections 4096` и `worker_rlimit_nofile 16384` в nginx;
-- очищены старые PWA-бэкапы, apt-кеш и журналы.
-
-Новые игры кладутся в отдельные подкаталоги `/var/www/mood-games/<slug>/`.
-Старые версии не копим: на сервере должна лежать только текущая сборка.
-Тяжёлые игры (10+ МБ) — в CDN/объектное хранилище, а не на этот VPS.
-
-## Проверка
-
-```bash
-curl -sI https://mood-app.online/ | grep -i 'content-type'
-curl -sI https://mood-app.online/blockpop/ | grep -i 'content-security-policy\|content-type'
-curl -s -o /dev/null -w '%{http_code}\n' https://mood-app.online/blockpop/assets/index-DCtda0_9.js
-```
+- Новые игры — в отдельные подкаталоги `/var/www/mood-games/<slug>/`.
+- На сервере держим только текущую сборку, старые версии не копим.
+- Тяжёлые игры (10+ МБ) — в CDN/объектное хранилище, не на VPS.
+- `ads.txt` — в корне сайта, в git не коммитится.

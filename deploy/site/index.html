@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mood Games — все игры</title>
+<meta name="description" content="Браузерные игры от создателя Mood. Без установки и регистрации: открыл — играешь.">
+<meta name="theme-color" content="#070512">
+<link rel="icon" href="assets/cabinet-mark.png">
+<link rel="stylesheet" href="style.css?v=1">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="site-header">
+    <a class="logo" href="/" aria-label="Mood Games — на главную">
+      <img src="assets/arcade-logo.png" alt="Mood Games">
+    </a>
+    <nav class="nav" aria-label="Основная навигация">
+      <a class="active" href="/">Игры</a>
+      <a href="about.html">О нас</a>
+      <a class="mood" href="https://mood-app.ru" target="_blank" rel="noopener">Mood ↗</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <div class="kicker">Mood Games · браузерные игры</div>
+        <h1>Все игры<br><span>в одном месте.</span></h1>
+        <p>Без установки и регистрации. Открыл — играешь. Новые игры появляются здесь же, ссылка не меняется.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#games">Смотреть игры</a>
+          <a class="btn ghost" href="about.html">О проекте</a>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <img src="assets/cabinet-mark.png" alt="">
+      </div>
+    </section>
+
+    <section class="games-section" id="games">
+      <div class="section-head">
+        <h2>Игры</h2>
+        <div class="rule"></div>
+        <span class="count" id="games-count"></span>
+      </div>
+      <div class="games" id="games-grid" aria-live="polite"></div>
+      <noscript>
+        <div class="noscript">
+          Для списка игр нужен JavaScript. Пока можно открыть
+          <a href="blockpop/" style="color:var(--p2)">Block Pop</a>.
+        </div>
+      </noscript>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>Mood Games · часть Mood · 2026</span>
+    <nav aria-label="Ссылки">
+      <a href="about.html">О нас</a>
+      <a href="https://mood-app.ru" target="_blank" rel="noopener">Mood</a>
+      <a href="https://t.me/mood_mpei_sup" target="_blank" rel="noopener">Поддержка</a>
+      <a href="https://github.com/SPARTANEC08/mood-games" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+  </footer>
+
+</div>
+<script src="app.js?v=1" defer></script>
+</body>
+</html>

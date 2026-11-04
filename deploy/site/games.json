@@ -1,0 +1,24 @@
+{
+  "games": [
+    {
+      "slug": "blockpop",
+      "title": "Block Pop",
+      "url": "blockpop/",
+      "description": "Головоломка на три минуты: собирай линии, ломай блоки и не дай полю заполниться.",
+      "tags": ["puzzle", "3 min", "mobile"],
+      "cover": "assets/blockpop-cover.png",
+      "status": "live",
+      "order": 1
+    },
+    {
+      "slug": "next",
+      "title": "Next game",
+      "url": "",
+      "description": "Следующая игра уже собирается. Хаб не меняется — появится ещё одна карточка.",
+      "tags": ["soon"],
+      "cover": "",
+      "status": "soon",
+      "order": 2
+    }
+  ]
+}
