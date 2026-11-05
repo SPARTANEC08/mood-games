@@ -5,20 +5,40 @@
       "title": "Block Pop",
       "url": "blockpop/",
       "description": "Головоломка на три минуты: собирай линии, ломай блоки и не дай полю заполниться.",
-      "tags": ["puzzle", "3 min", "mobile"],
+      "tags": [
+        "puzzle",
+        "3 min",
+        "mobile"
+      ],
       "cover": "assets/blockpop-cover.png",
       "status": "live",
       "order": 1
+    },
+    {
+      "slug": "musor-drop",
+      "title": "Мусор Дроп",
+      "url": "musor-drop/",
+      "description": "Симулятор открытия кейсов CS2: кейсы, апгрейд скинов, еженедельный кэшбэк и мини-игра 3 в ряд.",
+      "tags": [
+        "cases",
+        "upgrade",
+        "match-3"
+      ],
+      "cover": "assets/musor-drop-cover.png",
+      "status": "live",
+      "order": 2
     },
     {
       "slug": "next",
       "title": "Next game",
       "url": "",
       "description": "Следующая игра уже собирается. Хаб не меняется — появится ещё одна карточка.",
-      "tags": ["soon"],
+      "tags": [
+        "soon"
+      ],
       "cover": "",
       "status": "soon",
-      "order": 2
+      "order": 3
     }
   ]
 }

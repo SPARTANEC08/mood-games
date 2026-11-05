@@ -46,6 +46,7 @@ deploy/
 https://mood-app.online/            — главная: все игры
 https://mood-app.online/about.html  — о проекте
 https://mood-app.online/blockpop/   — Block Pop
+https://mood-app.online/musor-drop/ — Мусор Дроп
 https://mood-app.online/<slug>/     — следующая игра
 ```
 
